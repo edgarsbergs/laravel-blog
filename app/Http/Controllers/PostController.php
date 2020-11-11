@@ -17,11 +17,8 @@ class PostController extends Controller
                         ->orderBy('created_at','desc')
                         ->paginate(5);
 
-        $title = 'Latest Posts';
-
         return view('home', [
             'posts' => $posts,
-            'title' => $title,
         ]);
     }
 

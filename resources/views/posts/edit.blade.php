@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Edit Post
+    Edit
 @endsection
 @section('content')
     <script type="text/javascript" src="{{ asset('/js/tinymce/tinymce.min.js') }}"></script>
@@ -12,7 +12,7 @@
         });
     </script>
     <form method="post" action='{{ url("/update") }}'>
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        @csrf
         <input type="hidden" name="post_id" value="{{ $post->id }}{{ old('post_id') }}">
         <div class="form-group">
             <input required="required" placeholder="Enter title here" type="text" name = "title" class="form-control" value="@if(!old('title')){{$post->title}}@endif{{ old('title') }}"/>
