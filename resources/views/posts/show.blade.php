@@ -2,9 +2,9 @@
 @section('title')
     @if($post)
         {{ $post->title }}
-        @if(!Auth::guest() && ($post->user_id == Auth::user()->id || Auth::user()->is_admin()))
-            <button class="btn" style="float: right"><a href="{{ url('edit/'.$post->slug)}}">Edit Post</a></button>
-        @endif
+        @can('edit', $post)
+            <x-post-edit-buttons :post="$post"/>
+        @endcan
     @else
         Page does not exist
     @endif

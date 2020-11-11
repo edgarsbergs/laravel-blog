@@ -38,3 +38,6 @@ Route::get('user/{id}', 'App\Http\Controllers\UserController@profile')->whereNum
 Route::get('user/{id}/posts', 'App\Http\Controllers\UserController@user_posts')->whereNumber('id');
 // show post
 Route::get('/{slug}', 'App\Http\Controllers\PostController@show')->where('slug', '[A-Za-z0-9-_]+');
+
+Route::post('subscribe', 'App\Http\Controllers\SubscriberController@store');
+
