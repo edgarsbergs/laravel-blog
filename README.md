@@ -2,14 +2,14 @@
 
 ## Features
 
-Posts
-Comments
-Subscribe
+- Posts
+- Comments
+- Subscribe
 
 ## Todo
 
-Menus
-Admin panel
-Settings
-Tags
-Ratings
+- Menus
+- Admin panel
+- Settings
+- Tags
+- Ratings
