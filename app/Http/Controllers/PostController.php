@@ -21,18 +21,12 @@ class PostController extends Controller
         ]);
     }
 
-    // show form for creating post
-    public function create(Request $request)
-    {
-        if ($request->user()->can_post()) {
-            return view('posts/create');
-
-        } else {
-            return redirect('/')->withErrors('You have not sufficient permissions for writing post');
-        }
-    }
-
-    // save of publish post
+    /**
+     * Saves or publishes post
+     *
+     * @param object $request
+     * @return resource
+     */
     public function store(PostFormRequest $request)
     {
         $post = new Post();
@@ -42,27 +36,34 @@ class PostController extends Controller
 
         $post_exists = Post::where('slug', $post->slug)->first();
         if ($post_exists) {
-            return redirect('new-post')->withErrors('Post with that title already exists.')->withInput();
+            return redirect(route('newPost'))->withErrors(__('messages.post_title_exists'))->withInput();
         }
 
         $post->user_id = $request->user()->id;
         if ($request->has('save')) {
             $post->active = 0;
-            $message = 'Post saved successfully';
+            $message = __('messages.item_saved', ['item' => 'Post']);
+
         } else {
             $post->active = 1;
-            $message = 'Post published successfully';
+            $message = __('messages.item_published', ['item' => 'Post']);
         }
         $post->save();
 
-        return redirect('edit/' . $post->slug)->withMessage($message);
+        return redirect(route('admin/posts'))->withMessage($message);
     }
 
+    /**
+     * Shows post
+     *
+     * @param string $slug
+     * @return view
+     */
     public function show($slug)
     {
         $post = Post::where('slug', $slug)->first();
         if (!$post) {
-            return redirect('/')->withErrors('requested page not found');
+            return redirect('/')->withErrors(__('messages.page_404'));
         }
         $comments = $post->comments;
 
@@ -73,22 +74,13 @@ class PostController extends Controller
         ]);
     }
 
-    // show post edit form
-    public function edit(Request $request,$slug)
-    {
-        $post = Post::where('slug', $slug)->first();
-        if (!$post) {
-            return redirect('/')->withErrors('post does not exist!');
-        }
-
-        if ($request->user()->id == $post->user_id || $request->user()->is_admin()) {
-            return view('posts/edit')->with('post', $post);
-        }
-
-        return redirect('/')->withErrors('you have not sufficient permissions');
-    }
-
-    public function update(Request $request)
+    /**
+     * Updates post
+     *
+     * @param object $request
+     * @return resource
+     */
+    public function updatePost(Request $request)
     {
         $post_id = $request->input('post_id');
         $post = Post::find($post_id);
@@ -100,7 +92,7 @@ class PostController extends Controller
 
             if ($exists) {
                 if ($exists->id != $post_id) {
-                    return redirect('edit/' . $post->slug)->withErrors('Title already exists.')->withInput();
+                    return redirect('edit/' . $post->slug)->withErrors(__('messages.post_title_exists'))->withInput();
                 } else {
                     $post->slug = $slug;
                 }
@@ -111,11 +103,11 @@ class PostController extends Controller
 
             if ($request->has('save')) {
                 $post->active = 0;
-                $message = 'Post saved successfully';
+                $message = __('messages.item_saved', ['item' => 'Post']);
                 $route = 'admin/post';
             } else {
                 $post->active = 1;
-                $message = 'Post updated successfully';
+                $message = __('messages.item_updated', ['item' => 'Post']);
                 $route = 'admin/posts';
             }
             $post->save();
@@ -123,19 +115,26 @@ class PostController extends Controller
             return redirect(route( $route, $post->id))->withMessage($message);
 
         } else {
-            return redirect('/')->withErrors('you have not sufficient permissions');
+            return redirect(route('newPost'))->withErrors(__('messages.no_permission'))->withInput();
         }
     }
 
+    /**
+     * Deletes post
+     *
+     * @param object $request
+     * @param int $id
+     * @return resource
+     */
     public function destroy(Request $request, $id)
     {
         $post = Post::find($id);
         if ($post && ($post->user_id == $request->user()->id || $request->user()->is_admin())) {
             $post->delete();
-            $data['message'] = 'Post deleted Successfully';
+            $data['message'] = __('messages.deleted_success', ['item' => 'Post']);
 
         } else {
-            $data['errors'] = 'Invalid Operation. You have not sufficient permissions';
+            $data['errors'] = __('messages.no_permission');
         }
 
         return redirect(route('admin/posts'))->with($data);

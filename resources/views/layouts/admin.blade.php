@@ -11,13 +11,17 @@
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 </head>
 <body>
+@include('admin/components/top-menu')
 <div class="container-fluid h-100">
     <div class="row h-100">
-        <div class="col-md-2 col-sm-4 h-100" id="admin-menu">
-            @include('admin/components/menu')
+        <div class="col-md-2 col-sm-4 h-100" id="side-menu">
+            @include('admin/components/side-menu')
         </div>
         <div class="col-md-10 col-sm-8 h-100">
-            <h1>@yield('title')</h1>
+            <x-message />
+            <h1 style="display:inline">@yield('title')</h1>
+            @yield('after-title')
+            <hr />
             @yield('content')
         </div>
     </div>

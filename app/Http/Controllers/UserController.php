@@ -8,7 +8,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 
 class UserController extends Controller {
-    /*
+    /**
      * Display active posts of a particular user
      *
      * @param int $id
@@ -26,7 +26,11 @@ class UserController extends Controller {
     }
 
     /**
-     * profile for user
+     * Displays user's profile
+     *
+     * @param object $request
+     * @param int $id
+     * @return view
      */
     public function profile(Request $request, $id)
     {

@@ -1,14 +1,14 @@
-/* Admin menu */
-#admin-menu{
+/* Side menu */
+#side-menu{
 	background:#444;
 }
-#admin-menu *{
+#side-menu *{
 	color:#f1f1f1;
 }
-#admin-menu ul{
+#side-menu ul{
 	padding:0;
 }
-#admin-menu li {
+#side-menu li {
 	padding: 10px 0;
 	list-style:none;
 	border-bottom:1px solid #666;
