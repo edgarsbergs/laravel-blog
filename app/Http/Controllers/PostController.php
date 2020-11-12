@@ -12,7 +12,6 @@ class PostController extends Controller
 {
     public function index()
     {
-        // latest active posts
         $posts = Post::where('active', 1)
                         ->orderBy('created_at','desc')
                         ->paginate(5);
@@ -59,7 +58,6 @@ class PostController extends Controller
         return redirect('edit/' . $post->slug)->withMessage($message);
     }
 
-    // @TODO fix: shows when after registering
     public function show($slug)
     {
         $post = Post::where('slug', $slug)->first();
@@ -114,14 +112,15 @@ class PostController extends Controller
             if ($request->has('save')) {
                 $post->active = 0;
                 $message = 'Post saved successfully';
-                $landing = 'edit/' . $post->slug;
+                $route = 'admin/post';
             } else {
                 $post->active = 1;
                 $message = 'Post updated successfully';
-                $landing = $post->slug;
+                $route = 'admin/posts';
             }
             $post->save();
-            return redirect($landing)->withMessage($message);
+
+            return redirect(route( $route, $post->id))->withMessage($message);
 
         } else {
             return redirect('/')->withErrors('you have not sufficient permissions');
@@ -130,7 +129,7 @@ class PostController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $post = Posts::find($id);
+        $post = Post::find($id);
         if ($post && ($post->user_id == $request->user()->id || $request->user()->is_admin())) {
             $post->delete();
             $data['message'] = 'Post deleted Successfully';
@@ -139,6 +138,6 @@ class PostController extends Controller
             $data['errors'] = 'Invalid Operation. You have not sufficient permissions';
         }
 
-        return redirect('/')->with($data);
+        return redirect(route('admin/posts'))->with($data);
     }
 }
