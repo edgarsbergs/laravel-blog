@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts/admin')
 @section('title')
-    Edit
+    {{ $post->title }}
 @endsection
 @section('content')
     <script type="text/javascript" src="{{ asset('/js/tinymce/tinymce.min.js') }}"></script>
@@ -11,7 +11,7 @@
             toolbar : "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
         });
     </script>
-    <form method="post" action='{{ url("/update") }}'>
+    <form method="post" action='{{ route("updatePost") }}'>
         @csrf
         <input type="hidden" name="post_id" value="{{ $post->id }}{{ old('post_id') }}">
         <div class="form-group">
@@ -31,6 +31,10 @@
             <input type="submit" name='publish' class="btn btn-success" value = "Publish"/>
         @endif
         <input type="submit" name='save' class="btn btn-default" value = "Save As Draft" />
-        <a href="{{  url('delete/'.$post->id.'?_token='.csrf_token()) }}" class="btn btn-danger">Delete</a>
+        @php
+        $deleteUrl = route('admin/deletePost', $post->id);
+        $deleteUrl .= '?_token='.csrf_token();
+        @endphp
+        <a href="{{ $deleteUrl }}" class="btn btn-danger">Delete</a>
     </form>
 @endsection

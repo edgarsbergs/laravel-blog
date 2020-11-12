@@ -1,0 +1,18 @@
+/* Admin menu */
+#admin-menu{
+	background:#444;
+}
+#admin-menu *{
+	color:#f1f1f1;
+}
+#admin-menu ul{
+	padding:0;
+}
+#admin-menu li {
+	padding: 10px 0;
+	list-style:none;
+	border-bottom:1px solid #666;
+}
+.h-100{
+	height:100%;
+}
