@@ -10,6 +10,18 @@ use App\Models\Setting;
 
 class AdminController extends Controller
 {
+    private $globalSettings;
+
+    public function __construct()
+    {
+        $this->globalSettings = Setting::get();
+    }
+
+    /**
+     * Admin dashboard
+     *
+     * @return view
+     */
     public function index()
     {
         $postsCount = Post::where('active', 1)->count();
@@ -21,27 +33,39 @@ class AdminController extends Controller
         ]);
     }
 
-    // list of posts
+    /**
+     * Shows list of posts
+     *
+     * @return view
+     */
     public function posts()
     {
-        $posts = Post::all();
+        $posts = Post::paginate(5);
 
         return view('admin/posts', [
             'posts' => $posts,
         ]);
     }
 
-    // list of comments
+    /**
+     * Shows list of comments
+     *
+     * @return view
+     */
     public function comments()
     {
-        $comments = Comment::with('post')->get();
+        $comments = Comment::with('post')->paginate(5);
 
         return view('admin/comments', [
             'comments' => $comments,
         ]);
     }
 
-    // list of users
+    /**
+     * Shows list of users
+     *
+     * @return view
+     */
     public function users()
     {
         $users = User::all();
@@ -51,7 +75,11 @@ class AdminController extends Controller
         ]);
     }
 
-    // user profile
+    /**
+     * Shows user profile
+     *
+     * @return view
+     */
     public function user($id)
     {
         $user = User::find($id);
@@ -61,7 +89,11 @@ class AdminController extends Controller
         ]);
     }
 
-    // sites menus
+    /**
+     * Shows sites menus
+     *
+     * @return view
+     */
     public function menus()
     {
         $menus = [];
@@ -71,7 +103,11 @@ class AdminController extends Controller
         ]);
     }
 
-    // site settings
+    /**
+     * Shows site settings
+     *
+     * @return view
+     */
     public function settings()
     {
         $settings = Setting::all();
@@ -81,16 +117,37 @@ class AdminController extends Controller
         ]);
     }
 
-    // shows edit post form
+    /**
+     * Shows edit post form
+     *
+     * @param int $id
+     * @return view
+     */
     public function editPost($id)
     {
         $post = Post::find($id);
         if (!$post) {
-            return redirect(route('admin/posts'))->withErrors('Post doesnt exist');
+            return redirect(route('admin/posts'))->withErrors(__('messages.post_doesnt_exist'));
         }
 
         return view('admin/posts-edit', [
             'post' => $post,
         ]);
+    }
+
+    /**
+     * Shows new post form
+     *
+     * @param object $request
+     * @return resource
+     */
+    public function newPost(Request $request)
+    {
+        if ($request->user()->can_post()) {
+            return view('admin/posts-new');
+
+        } else {
+            return redirect(route('admin/posts'))->withErrors(__('messages.no_permission_writing_post'));
+        }
     }
 }

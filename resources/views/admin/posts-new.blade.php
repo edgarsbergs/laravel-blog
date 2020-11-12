@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts/admin')
 @section('title')
     Add New Post
 @endsection
@@ -11,7 +11,7 @@
             toolbar : "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
         });
     </script>
-    <form action="/new-post" method="post">
+    <form action="{{ route('storePost') }}" method="post">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group">
             <input required="required" value="{{ old('title') }}" placeholder="Enter title here" type="text" name = "title"class="form-control" />
