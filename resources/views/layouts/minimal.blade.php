@@ -44,9 +44,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3" id="sidebar">
-            <x-subscribe/>
-        </div>
     </div>
 
     <div class="row">
