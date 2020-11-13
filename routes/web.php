@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SubscriberController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +20,7 @@ use App\Http\Controllers\SettingController;
 
 Auth::routes();
 
-Route::get('/', [PostController::class, 'index']);
+Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
     /* Admin panel */
@@ -44,10 +45,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('comment/delete/{id}', [CommentController::class, 'destroy']);
 });
 
-Route::get('user/{id}', 'App\Http\Controllers\UserController@profile')->whereNumber('id')->name('profile');
-Route::get('user/{id}/posts', 'App\Http\Controllers\UserController@user_posts')->whereNumber('id');
+Route::get('user/{id}', [UserController::class, 'profile'])->whereNumber('id')->name('profile');
+Route::get('user/{id}/posts', [UserController::class, 'user_posts'])->whereNumber('id');
 // show post
-Route::get('/{slug}', 'App\Http\Controllers\PostController@show')->where('slug', '[A-Za-z0-9-_]+')->name('showPost');
+Route::get('/{slug}', [PostController::class, 'show'])->where('slug', '[A-Za-z0-9-_]+')->name('showPost');
 
-Route::post('subscribe', 'App\Http\Controllers\SubscriberController@store');
+Route::post('subscribe', [SubscriberController::class, 'store']);
 
