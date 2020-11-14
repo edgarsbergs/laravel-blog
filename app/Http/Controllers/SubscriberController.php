@@ -15,9 +15,10 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
-        Subscriber::create([
-            'email' => $request->email,
-         ]);
+        $validated = $request->validate([
+            'email' => 'required|unique:subscribers|email',
+        ]);
+        Subscriber::create($validated);
 
         return redirect('/')->withMessage(__('messages.subscribed'));
     }

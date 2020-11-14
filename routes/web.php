@@ -50,5 +50,5 @@ Route::get('user/{id}/posts', [UserController::class, 'user_posts'])->whereNumbe
 // show post
 Route::get('/{slug}', [PostController::class, 'show'])->where('slug', '[A-Za-z0-9-_]+')->name('showPost');
 
-Route::post('subscribe', [SubscriberController::class, 'store']);
+Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribe');
 
