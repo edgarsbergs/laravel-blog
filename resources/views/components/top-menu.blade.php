@@ -6,16 +6,15 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="{{ route('admin') }}" class="nav-link">Admin</a>
+            </li>
             @if (Auth::guest())
                 <li class="nav-item">
                     <a href="{{ url('/login') }}" class="nav-link">Login</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('/register') }}" class="nav-link">Register</a>
-                </li>
-            @else
-                <li class="nav-item">
-                    <a href="{{ url('/admin') }}" class="nav-link">Admin</a>
                 </li>
             @endif
         </ul>

@@ -1,7 +1,9 @@
 @extends('layouts/admin')
+
 @section('title')
-    Add New Post
+    {{ __('admin.add_new_post') }}
 @endsection
+
 @section('content')
     <script type="text/javascript" src="{{ asset('/js/tinymce/tinymce.min.js') }}"></script>
     <script type="text/javascript">
@@ -12,14 +14,16 @@
         });
     </script>
     <form action="{{ route('storePost') }}" method="post">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        @csrf
         <div class="form-group">
-            <input required="required" value="{{ old('title') }}" placeholder="Enter title here" type="text" name = "title"class="form-control" />
+            <input required="required" value="{{ old('title') }}" placeholder="{{ __('admin.enter_title') }}" type="text" name = "title"class="form-control" />
         </div>
         <div class="form-group">
             <textarea name='body'class="form-control">{{ old('body') }}</textarea>
         </div>
-        <input type="submit" name='publish' class="btn btn-success" value = "Publish"/>
-        <input type="submit" name='save' class="btn btn-default" value = "Save Draft" />
+        <div class="mt-5">
+            <input type="submit" name='publish' class="btn btn-success" value="{{ __('buttons.publish') }}"/>
+            <input type="submit" name='save' class="btn btn-default" value="{{ __('buttons.save_draft') }}" />
+        </div>
     </form>
 @endsection

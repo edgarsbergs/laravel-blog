@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{$meta_title ?? 'Blog'}}</title>
+    <title>{{ $meta_title ?? 'Blog' }}</title>
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -49,9 +49,9 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-md-12">
-            footer
+            <footer>footer</footer>
         </div>
     </div>
 </div>
