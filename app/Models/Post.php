@@ -17,6 +17,13 @@ class Post extends Model
         return $this->hasMany('App\Models\Comment', 'post_id');
     }
 
+    // user may have tags
+    public function tags()
+    {
+        return $this->hasManyThrough('App\Models\Tag', 'App\Models\PostRelation', 'post_id', 'id' ,'id' ,'ref_id')
+            ->where('ref_type', 'tag');
+    }
+
     // post is made by user
     public function author()
     {

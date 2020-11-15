@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\TagController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,14 +43,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('admin/settings/update', [SettingController::class, 'update'])->name('updateSettings');
 
     /* Frontend */
-    Route::post('comment/add', [CommentController::class, 'store']);
+    Route::post('comment/add', [CommentController::class, 'store'])->name('addComment');
     Route::post('comment/delete/{id}', [CommentController::class, 'destroy']);
 });
 
 Route::get('user/{id}', [UserController::class, 'profile'])->whereNumber('id')->name('profile');
 Route::get('user/{id}/posts', [UserController::class, 'user_posts'])->whereNumber('id');
-// show post
-Route::get('/{slug}', [PostController::class, 'show'])->where('slug', '[A-Za-z0-9-_]+')->name('showPost');
 
 Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribe');
+
+Route::get('logout', [LoginController::class, 'logout']);
+
+// show posts by tag
+Route::get('/tag/{slug}', [TagController::class, 'show'])->where('slug', '[A-Za-z0-9-_]+')->name('showTag');
+
+// show post
+Route::get('/{slug}', [PostController::class, 'show'])->where('slug', '[A-Za-z0-9-_]+')->name('showPost');
 

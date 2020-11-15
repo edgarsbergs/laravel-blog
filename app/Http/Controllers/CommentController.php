@@ -14,11 +14,14 @@ class CommentController extends Controller
      * @return resource
      */
     public function store(Request $request) {
-        $input['user_id'] = $request->user()->id;
-        $input['post_id'] = $request->input('post_id');
-        $input['body'] = $request->input('body');
+        $validated = $request->validate([
+            'body' => 'required',
+        ]);
+        $validated['user_id'] = $request->user()->id;
+        $validated['post_id'] = $request->input('post_id');
+        Comment::create( $validated );
+
         $slug = $request->input('slug');
-        Comment::create( $input );
 
         return redirect($slug)->with('message', __('messages.item_published', ['item' => 'Comment']));
     }

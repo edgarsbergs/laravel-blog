@@ -10,5 +10,13 @@ return [
     */
 
     'subscribe' => 'Subscribe',
+    'add_new' => 'Add new',
+    'publish' => 'Publish',
+    'save' => 'Save',
+    'post' => 'Post',
+    'save_draft' => 'Save draft',
+    'delete' => 'Delete',
+    'save_and_continue' => 'Save & continue editing',
+    'logout' => 'Logout',
 
 ];
