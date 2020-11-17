@@ -7,9 +7,11 @@
 - Comments
 - Settings
 - Subscribe
+- Tags
 
 ## Todo
 
+- Pages
 - Menus
-- Tags
+- Categories
 - Ratings
