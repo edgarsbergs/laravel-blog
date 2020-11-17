@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostsRelationsTable extends Migration
+class CreatePostRelationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,6 +19,7 @@ class CreatePostsRelationsTable extends Migration
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->string('ref_type', 30);
             $table->integer('ref_id')->index();
+            $table->unique(['post_id', 'ref_type' ,'ref_id']);
         });
     }
 

@@ -108,7 +108,9 @@ class PostController extends Controller
             $route = 'admin/posts';
         }
         $post->update($values);
-        TagController::store($post_id, $request->tags);
+        if ($request->tags) {
+            TagController::save($post_id, $request->tags);
+        }
 
         return redirect(route( $route, $post->id))->withMessage($message);
     }

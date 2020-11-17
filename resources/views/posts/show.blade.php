@@ -3,12 +3,13 @@
 @section('title')
     @if($post)
         {{ $post->title }}
-        @can('edit', $post)
-            <x-post-edit-buttons :post="$post"/>
-        @endcan
-    @else
-        Page does not exist
     @endif
+@endsection
+
+@section('after-title')
+    @can('edit', $post)
+        <x-post-edit-buttons :post="$post"/>
+    @endcan
 @endsection
 
 @section('title-meta')
@@ -41,7 +42,5 @@
             </div>
         @endif
         @include('comments', ['comments' => $comments])
-    @else
-        404 error
     @endif
 @endsection

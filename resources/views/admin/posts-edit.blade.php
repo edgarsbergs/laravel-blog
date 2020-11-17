@@ -4,6 +4,10 @@
     {{ $post->title }}
 @endsection
 
+@section('after-title')
+    <a href="{{ route('showPost', $post->slug) }}" class="btn-light">{{ __('buttons.view_post') }}</a>
+@endsection
+
 @section('content')
     <script type="text/javascript" src="{{ asset('/js/tinymce/tinymce.min.js') }}"></script>
     <script type="text/javascript">
@@ -31,7 +35,7 @@
                     </textarea>
                 </div>
 
-                @include('admin/components/tags-form')
+                @include('admin/components/tags-form', ['tags' => $post->tags])
 
                 <div class="mt-5">
                     @if($post->active == 1)
