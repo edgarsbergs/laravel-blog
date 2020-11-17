@@ -125,7 +125,8 @@ class AdminController extends Controller
      */
     public function editPost($id)
     {
-        $post = Post::find($id);
+        $post = Post::where('id', $id)->with('tags')->first();
+
         if (!$post) {
             return redirect(route('admin/posts'))->withErrors(__('messages.post_doesnt_exist'));
         }

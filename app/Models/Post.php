@@ -11,13 +11,13 @@ class Post extends Model
 
     protected $guarded = [];
 
-    // user may have comments
+    // post may have comments
     public function comments()
     {
         return $this->hasMany('App\Models\Comment', 'post_id');
     }
 
-    // user may have tags
+    // post may have tags
     public function tags()
     {
         return $this->hasManyThrough('App\Models\Tag', 'App\Models\PostRelation', 'post_id', 'id' ,'id' ,'ref_id')

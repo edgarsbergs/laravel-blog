@@ -16,6 +16,7 @@ class Posts extends Migration
         // blog posts
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('post_type')->default('post');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')->on('users')

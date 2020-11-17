@@ -35,7 +35,8 @@
             <div class="panel panel-default">
                 @if (View::hasSection('title'))
                 <div class="panel-heading">
-                    <h2>@yield('title')</h2>
+                    <h2 class="d-inline">@yield('title')</h2>
+                    <span>@yield('after-title')</span>
                     @yield('title-meta')
                 </div>
                 @endif
