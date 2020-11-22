@@ -8,11 +8,13 @@
 <script>
     $(function() {
         $('#tags').magicSuggest({
-            value: [
-                @foreach($tags as $tag)
-                '{{ $tag->title }}',
-                @endforeach
-            ]
+            @if (isset($tags))
+                value: [
+                    @foreach($tags as $tag)
+                    '{{ $tag->title }}',
+                    @endforeach
+                ]
+            @endif
         });
     });
 </script>

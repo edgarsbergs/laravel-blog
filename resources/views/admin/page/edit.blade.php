@@ -1,7 +1,7 @@
 @extends('layouts/admin')
 
 @section('title')
-    {{ $post->title }}
+{{ $post->title }}
 @endsection
 
 @section('after-title')
@@ -9,14 +9,7 @@
 @endsection
 
 @section('content')
-    <script type="text/javascript" src="{{ asset('/js/tinymce/tinymce.min.js') }}"></script>
-    <script type="text/javascript">
-        tinymce.init({
-            selector : "textarea",
-            plugins : ["advlist autolink lists link image charmap print preview anchor", "searchreplace visualblocks code fullscreen", "insertdatetime media table contextmenu paste"],
-            toolbar : "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-        });
-    </script>
+    <x-editor />
     <div class="row">
         <div class="col-lg-9 col-md-8">
             <form method="post" action='{{ route("updatePost") }}'>
@@ -34,8 +27,8 @@
                         {!! old('body') !!}
                     </textarea>
                 </div>
-
-                @include('admin/components/tags-form', ['tags' => $post->tags])
+                <!-- additional edit forms if post_type requires them -->
+                @yield('content-edit-1')
 
                 <div class="mt-5">
                     @if($post->active == 1)

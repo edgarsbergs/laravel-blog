@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SettingController;
@@ -27,13 +28,19 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 Route::middleware(['auth'])->group(function () {
     /* Admin panel */
     Route::get('admin', [AdminController::class, 'index'])->name('admin');
-    Route::get('admin/posts', [AdminController::class, 'posts'])->name('admin/posts');
-    Route::get('admin/post/{id}', [AdminController::class, 'editPost'])->name('admin/post');
+    /* Posts */
+    Route::get('admin/posts', [PostController::class, 'adminList'])->name('admin/post/list');
+    Route::get('admin/post/{id}', [PostController::class, 'editContent'])->name('admin/post');
     Route::get('admin/post/save', [PostController::class, 'update'])->name('admin/savePost');
     Route::get('admin/post/{id}/delete', [PostController::class, 'destroy'])->name('admin/deletePost');
-    Route::get('admin/post-new', [AdminController::class, 'newPost'])->name('newPost');
+    Route::get('admin/post-new', [PostController::class, 'newPost'])->name('new_post');
     Route::post('admin/post-new/save', [PostController::class, 'store'])->name('storePost');
     Route::post('admin/post/update', [PostController::class, 'updatePost'])->name('updatePost');
+
+    /* Pages */
+    Route::get('admin/pages', [PageController::class, 'adminList'])->name('admin/page/list');
+    Route::get('admin/page/{id}', [PageController::class, 'editContent'])->name('admin/page');
+    Route::get('admin/page-new', [PageController::class, 'newPost'])->name('new_page');
 
     Route::get('admin/comments', [AdminController::class, 'comments'])->name('admin/comments');
     Route::get('admin/menus', [AdminController::class, 'menus'])->name('admin/menus');
@@ -47,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('comment/delete/{id}', [CommentController::class, 'destroy']);
 });
 
+/* User */
 Route::get('user/{id}', [UserController::class, 'profile'])->whereNumber('id')->name('profile');
 Route::get('user/{id}/posts', [UserController::class, 'user_posts'])->whereNumber('id');
 
@@ -54,9 +62,9 @@ Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscri
 
 Route::get('logout', [LoginController::class, 'logout']);
 
-// show posts by tag
+/* show posts by tag */
 Route::get('/tag/{slug}', [TagController::class, 'show'])->where('slug', '[A-Za-z0-9-_]+')->name('showTag');
 
-// show post
+/* show post */
 Route::get('/{slug}', [PostController::class, 'show'])->where('slug', '[A-Za-z0-9-_]+')->name('showPost');
 

@@ -11,8 +11,8 @@
                     {{ __('admin.posts') }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('admin/posts') }}">{{ __('admin.posts') }}</a>
-                    <a class="dropdown-item" href="{{ route('newPost') }}">{{ __('admin.add_new') }}</a>
+                    <a class="dropdown-item" href="{{ route('admin/post/list') }}">{{ __('admin.posts') }}</a>
+                    <a class="dropdown-item" href="{{ route('new_post') }}">{{ __('admin.add_new') }}</a>
                 </div>
             </li>
             <li class="nav-item">

@@ -1,15 +1,17 @@
-# Blog made with Laravel 8
+# Blog/CMS made with Laravel 8
 
 ## Features
 
-Posts
-Comments
-Subscribe
+- Admin panel
+- Posts
+- Pages
+- Comments
+- Settings
+- Subscribe
+- Tags
 
 ## Todo
 
-Menus
-Admin panel
-Settings
-Tags
-Ratings
+- Menus
+- Categories
+- Ratings

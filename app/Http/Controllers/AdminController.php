@@ -34,20 +34,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Shows list of posts
-     *
-     * @return view
-     */
-    public function posts()
-    {
-        $posts = Post::paginate(5);
-
-        return view('admin/posts', [
-            'posts' => $posts,
-        ]);
-    }
-
-    /**
      * Shows list of comments
      *
      * @return view
@@ -118,37 +104,17 @@ class AdminController extends Controller
     }
 
     /**
-     * Shows edit post form
-     *
-     * @param int $id
-     * @return view
-     */
-    public function editPost($id)
-    {
-        $post = Post::where('id', $id)->with('tags')->first();
-
-        if (!$post) {
-            return redirect(route('admin/posts'))->withErrors(__('messages.post_doesnt_exist'));
-        }
-
-        return view('admin/posts-edit', [
-            'post' => $post,
-        ]);
-    }
-
-    /**
      * Shows new post form
      *
      * @param object $request
      * @return resource
      */
-    public function newPost(Request $request)
+    public function pages(Request $request)
     {
-        if ($request->user()->can_post()) {
-            return view('admin/posts-new');
+        $pages = Post::paginate(5);
 
-        } else {
-            return redirect(route('admin/posts'))->withErrors(__('messages.no_permission_writing_post'));
-        }
+        return view('admin/pages', [
+            'pages' => $pages,
+        ]);
     }
 }
